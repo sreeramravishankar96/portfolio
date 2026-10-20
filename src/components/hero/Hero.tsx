@@ -131,6 +131,8 @@ export function Hero() {
             className="h-full w-auto max-w-full object-contain pointer-events-none"
             style={{
               aspectRatio: "768 / 960",
+              transform: "scaleY(1.06)",
+              transformOrigin: "center center",
               mixBlendMode: "multiply",
               maskImage: "linear-gradient(to bottom, black 96%, transparent 100%)",
               WebkitMaskImage: "linear-gradient(to bottom, black 96%, transparent 100%)"
