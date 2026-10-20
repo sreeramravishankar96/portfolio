@@ -79,7 +79,7 @@ export function Experience() {
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                       <span className="text-xs font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[#f0eee9] text-[#0d0d0d]">
-                        {item.year}
+                        {item.dateRange}
                       </span>
                       <span className="text-xs font-mono text-[#77756f]">
                         {item.location}
