@@ -137,7 +137,7 @@ export function IdCard() {
                   alt={PROFILE.name}
                   width={128}
                   height={156}
-                  className="w-full h-full object-cover rounded-[10px] grayscale transition-transform duration-500 ease-out group-hover:scale-105"
+                  className="w-full h-full object-cover rounded-[10px] transition-transform duration-500 ease-out group-hover:scale-105"
                 />
                 <div className="absolute inset-0 rounded-[10px] pointer-events-none shadow-[inset_0_0_12px_rgba(0,0,0,0.15)]" />
               </div>
