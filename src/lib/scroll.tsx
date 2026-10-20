@@ -76,7 +76,12 @@ export function ScrollProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    lenisRef.current.scrollTo(target, {
+    const lenisTarget =
+      typeof target === "string" && !target.startsWith("#")
+        ? document.getElementById(target) ?? target
+        : target;
+
+    lenisRef.current.scrollTo(lenisTarget, {
       offset: options?.offset ?? -30,
       duration: options?.duration ?? 1.2
     });
