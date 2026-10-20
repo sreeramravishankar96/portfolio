@@ -94,7 +94,7 @@ export function About() {
                 <div className="pb-3 border-b border-[rgba(13,13,13,0.06)]">
                   <span className="text-[#999] block mb-1">EDUCATION</span>
                   <span className="text-[#0d0d0d] font-semibold text-sm">
-                    M.Sc. Information Technology (Glasgow)
+                    M.Sc. in Information Technology at University of Glasgow
                   </span>
                 </div>
 

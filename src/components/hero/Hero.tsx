@@ -102,7 +102,7 @@ export function Hero() {
           className="font-bold tracking-tight uppercase text-transparent block"
           style={{
             fontSize: "clamp(4.5rem, 16vw, 16rem)",
-            WebkitTextStroke: "1px rgba(13, 13, 13, 0.08)",
+            WebkitTextStroke: "1.5px rgba(13, 13, 13, 0.14)",
             lineHeight: 0.85
           }}
         >
@@ -132,8 +132,8 @@ export function Hero() {
             style={{
               aspectRatio: "768 / 960",
               mixBlendMode: "multiply",
-              maskImage: "linear-gradient(to bottom, black 82%, transparent 98%)",
-              WebkitMaskImage: "linear-gradient(to bottom, black 82%, transparent 98%)"
+              maskImage: "linear-gradient(to bottom, black 96%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to bottom, black 96%, transparent 100%)"
             }}
           >
             <source src="/portfolio/hero/hero.webm" type="video/webm" />

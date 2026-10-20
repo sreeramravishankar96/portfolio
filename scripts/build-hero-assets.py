@@ -66,11 +66,13 @@ def main():
 
     print("=== 3. Processing video with pure white backdrop ===")
     # Crop around person: 560:700:346:15 -> scaled to 768:960
-    # Whiten background cleanly: rimax=0.95 guarantees pure 255 #ffffff everywhere around the person
+    # Preserve shoe and clothing highlights while keeping the light backdrop blend-friendly.
     filter_complex = (
         "[0:v]trim=start=0:end=10,setpts=PTS-STARTPTS,"
         "crop=560:700:346:15,scale=768:960,"
-        "colorlevels=rimax=0.95:gimax=0.95:bimax=0.95[v]"
+        "eq=contrast=1.12:brightness=-0.015,"
+        "unsharp=5:5:0.5:3:3:0,"
+        "colorlevels=rimax=0.98:gimax=0.98:bimax=0.98[v]"
     )
 
     out_mp4 = os.path.join(HERO_DIR, "hero.mp4")
