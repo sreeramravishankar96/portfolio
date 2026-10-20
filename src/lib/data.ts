@@ -75,7 +75,7 @@ export const PROFILE: Profile = {
   firstName: "Sreeram",
   lastName: "Ravishankar",
   role: "Software Engineer - Java",
-  email: "work.ram22@gmail.com",
+  email: "sreeramravishankar96@gmail.com",
   phone: "+91-9008174440",
   phoneHref: "tel:+919008174440",
   location: "Bengaluru, India",

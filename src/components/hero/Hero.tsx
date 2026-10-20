@@ -9,53 +9,18 @@ export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const heroSectionRef = useRef<HTMLElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const roleTitle = PROFILE.role.split("-")[0].trim();
+  const titlePrefix = roleTitle.replace(/\s+Engineer$/i, "");
+  const hasEngineerSuffix = /\s+Engineer$/i.test(roleTitle);
 
-  // Play once on mount or upon first user interaction
+  // Autoplay muted; browsers require a user gesture before playing audio.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-
-    // Start playback
-    const startFirstPlay = (unmute = false) => {
-      if (unmute) {
-        video.muted = false;
-      }
-      video
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-        })
-        .catch(() => {
-          // If browser blocks audio autoplay, play muted once
-          video.muted = true;
-          video.play().then(() => setIsPlaying(true)).catch(() => {});
-        });
-    };
-
-    // Attempt direct play
-    startFirstPlay(false);
-
-    // If initial play was muted, unlock audio on first interaction
-    const unlockAudio = () => {
-      if (video && !hasPlayedOnce) {
-        video.muted = false;
-      }
-      cleanup();
-    };
-
-    const cleanup = () => {
-      window.removeEventListener("pointerdown", unlockAudio);
-      window.removeEventListener("keydown", unlockAudio);
-      window.removeEventListener("touchend", unlockAudio);
-    };
-
-    window.addEventListener("pointerdown", unlockAudio, { once: true });
-    window.addEventListener("keydown", unlockAudio, { once: true });
-    window.addEventListener("touchend", unlockAudio, { once: true });
-
-    return () => cleanup();
-  }, [hasPlayedOnce]);
+    video.muted = true;
+    video.play().catch(() => {});
+  }, []);
 
   // Pause if scrolled out of view; resume only if was previously playing
   useEffect(() => {
@@ -82,7 +47,6 @@ export function Hero() {
   // Handle video ending: stops and resets button to play ▶
   const handleEnded = () => {
     setIsPlaying(false);
-    setHasPlayedOnce(true);
   };
 
   // Play / Pause button toggle: plays once from start if ended
@@ -95,6 +59,7 @@ export function Hero() {
         video.currentTime = 0;
       }
       video.muted = false;
+      setIsMuted(false);
       video
         .play()
         .then(() => setIsPlaying(true))
@@ -102,6 +67,22 @@ export function Hero() {
     } else {
       video.pause();
       setIsPlaying(false);
+    }
+  };
+
+  const toggleSound = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const nextMuted = !video.muted;
+    video.muted = nextMuted;
+    setIsMuted(nextMuted);
+
+    if (!nextMuted) {
+      video.play().catch(() => {
+        video.muted = true;
+        setIsMuted(true);
+      });
     }
   };
 
@@ -130,7 +111,7 @@ export function Hero() {
       </div>
 
       {/* Center Video Frame - Person Outline Only (no box, soft bottom blend) */}
-      <div className="relative z-10 w-full flex items-center justify-center my-auto px-4">
+      <div className="relative w-full flex items-center justify-center my-auto px-4">
         <div
           className="relative max-w-[768px] w-full flex justify-center items-center"
           style={{
@@ -139,6 +120,8 @@ export function Hero() {
         >
           <video
             ref={videoRef}
+            autoPlay
+            muted
             playsInline
             preload="auto"
             onEnded={handleEnded}
@@ -157,8 +140,19 @@ export function Hero() {
             <source src="/portfolio/hero/hero.mp4" type="video/mp4" />
           </video>
 
-          {/* Sound / Playback Control Button: 46px solid ink */}
-          <div className="absolute bottom-4 right-4 sm:bottom-8 sm:right-8 z-20">
+          {/* Playback and sound controls */}
+          <div className="absolute bottom-4 right-4 sm:bottom-8 sm:right-8 z-20 flex items-center gap-2">
+            <button
+              onClick={toggleSound}
+              aria-label={isMuted ? "Enable introduction sound" : "Mute introduction sound"}
+              title={isMuted ? "Enable sound" : "Mute sound"}
+              className="w-[46px] h-[46px] rounded-full bg-[#0d0d0d] text-white flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-transform duration-200"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M11 5 6 9H3v6h3l5 4V5Z" />
+                {isMuted ? <path d="m17 9 4 6m0-6-4 6" /> : <><path d="M15.5 8.5a5 5 0 0 1 0 7" /><path d="M18.5 5.5a9 9 0 0 1 0 13" /></>}
+              </svg>
+            </button>
             <button
               onClick={togglePlay}
               aria-label={isPlaying ? "Pause introduction" : "Play introduction"}
@@ -197,8 +191,8 @@ export function Hero() {
         <div>
           <span className="tag-mono">00 — Welcome</span>
           <h1 className="heading-display">
-            {PROFILE.role.split("-")[0].trim()}{" "}
-            <span className="heading-italic">Engineer.</span>
+            {titlePrefix}{hasEngineerSuffix && " "}
+            {hasEngineerSuffix && <span className="heading-italic">Engineer</span>}
           </h1>
         </div>
 
