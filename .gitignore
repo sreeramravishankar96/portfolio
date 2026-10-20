@@ -1,0 +1,26 @@
+# Dependencies and generated build output
+node_modules/
+.next/
+out/
+dist/
+coverage/
+
+# Generated files by extension
+*.log
+*.tsbuildinfo
+*.py[cod]
+
+# Local environment and editor files
+.env*
+!.env.example
+__pycache__/
+.DS_Store
+Thumbs.db
+.idea/
+
+# Local media-processing binaries
+/bin/
+/python/
+/tools/
+/screenshot-*.png
+/New folder/resume.pdf
