@@ -87,6 +87,9 @@ def main():
         "-map", "[v]",
         "-map", "1:a",
         "-c:v", "libx264",
+        # Keep the MP4 within the most widely supported iOS hardware decode path.
+        "-profile:v", "baseline",
+        "-level:v", "3.1",
         "-pix_fmt", "yuv420p",
         "-crf", "24",
         "-preset", "slow",

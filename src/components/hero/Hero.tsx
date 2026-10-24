@@ -138,8 +138,8 @@ export function Hero() {
               WebkitMaskImage: "linear-gradient(to bottom, black 96%, transparent 100%)"
             }}
           >
-            <source src="/portfolio/hero/hero.webm" type="video/webm" />
             <source src="/portfolio/hero/hero.mp4" type="video/mp4" />
+            <source src="/portfolio/hero/hero.webm" type="video/webm" />
           </video>
 
           {/* Playback and sound controls */}
